@@ -1,0 +1,17 @@
+---
+# Check for existence!
+# Then start the generation script only when files does not exists
+- name: Check if dhparams file is already generated
+  stat:
+    path: "/etc/ssl/dhparams{{ shokinn_dhparam_size }}.pem"
+  register: stat_dhparams_generated
+
+# tasks file for shokinn.system.dhparam
+- name: Genereate DH parameters file (this can take a long while. Really, really, really, long while)
+  openssl_dhparam:
+    path: "/etc/ssl/dhparams{{ shokinn_dhparam_size }}.pem"
+    size: "{{ shokinn_dhparam_size }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: stat_dhparams_generated.stat.exists == False

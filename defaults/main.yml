@@ -1,0 +1,3 @@
+---
+# defaults file for shokinn.system.dhparam
+shokinn_dhparam_size: "4096"
